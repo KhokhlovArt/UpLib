@@ -14,7 +14,4 @@ public interface IShell{
     String getVersion(Context cnt);
     void updateLibs(Context cnt, LoaderManager lm);
     void initialize(final Context cnt);
-
-
-
 }

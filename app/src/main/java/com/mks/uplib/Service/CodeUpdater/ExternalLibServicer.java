@@ -135,6 +135,18 @@ public class ExternalLibServicer {
     //*********************************************************************************************
     //*********************************************************************************************
 
+    public void printClassMethods(Class c)
+    {
+        try {
+            Method[] m = c.getDeclaredMethods();
+            System.out.println("----- class " + c + " methods -----");
+            for (int i = 0; i < m.length; i++)
+                System.out.println(m[i].toString());
+        } catch (Throwable e) {
+            System.err.println(e);
+        }
+    }
+
     public Object getInstance(Class clazz, Object[] arg, Class[] argClass )
     {
         Object objOfClass = null;
@@ -174,6 +186,7 @@ public class ExternalLibServicer {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
+                e.getCause().printStackTrace();
                 e.printStackTrace();
             }
         }
@@ -192,6 +205,7 @@ public class ExternalLibServicer {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
+                e.getCause().printStackTrace();
                 e.printStackTrace();
             }
         }

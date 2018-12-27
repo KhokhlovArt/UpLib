@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateEncodingException;
@@ -94,6 +96,12 @@ public class CryptoProviderServicer {
         return str.toString();
     }
 
+
+
+    /**********************************************************************************************
+     * !!!!! ДЛЯ СБОРКИ DEX-а ЭТУ ЧАСТЬ НАДО ЗАКОМЕННТИРОВАТЬ !!!!
+     **********************************************************************************************/
+
     public static String cript(String val)
     {
         return codeFromJNI(val);
@@ -112,4 +120,77 @@ public class CryptoProviderServicer {
     static {
         System.loadLibrary("hello-jni2");
     }
+
+
+    /**********************************************************************************************
+     * А ВОТ ЭТУ РАСКОМЕНТИРОВАТЬ
+     **********************************************************************************************/
+
+
+//    public static String cript(String value)
+//    {
+//        if (value == null){return null;}
+//        try {
+//            Class clazz = Class.forName("com.mks.uplib.Service.CryptoProvider.CryptoProviderServicer");
+//            Method exists = clazz.getMethod("cript", new Class[]{String.class});
+//            exists.setAccessible(true);
+//            String codeText = (String) exists.invoke(clazz, new Object[]{value});
+//            return codeText;
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
+//    public static String deCript(String res)
+//    {
+//        if (res == null){return null;}
+//        String decodeText = null;
+//        Class clazz = null;
+//        try {
+//            clazz = Class.forName("com.mks.uplib.Service.CryptoProvider.CryptoProviderServicer");
+//            Method exists = clazz.getMethod("deCript", new Class[]{String.class});
+//            exists.setAccessible(true);
+//            decodeText = (String) exists.invoke(clazz, new Object[]{res});
+//            return decodeText;
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+//        return decodeText;
+//    }
+//
+//    public static String codeUrlParams(Context cnt, String str){
+//        if (str == null){return null;}
+//        String decodeText = null;
+//        Class clazz = null;
+//        try {
+//            clazz = Class.forName("com.mks.uplib.Service.CryptoProvider.CryptoProviderServicer");
+//            Method exists = clazz.getMethod("codeUrlParams", new Class[]{Context.class, String.class});
+//            exists.setAccessible(true);
+//            decodeText = (String) exists.invoke(clazz, new Object[]{cnt, str});
+//            return decodeText;
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+//        return decodeText;
+//        //    return  codeUrlParamsJNI(cnt, str);
+//    }
 }

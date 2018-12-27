@@ -17,6 +17,8 @@ import com.mks.uplib.Service.HttpsConnection.HttpsConnectionServicer;
 import com.mks.uplib.Service.HttpsConnection.Proxy;
 import com.mks.uplib.Service.Logger.Logger;
 import com.mks.uplib.Service.SharedPreferencesServicer.SharedPreferencesServicer;
+import com.mks.uplib.Service.Shell_external.Shell_external;
+import com.mks.uplib.Shell;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,7 +108,6 @@ public class CodeUpdater {
                 libs[i].clearDexClassLoader();
             }
         }
-
         saveAdditionalConfigOptions(cnt);
     }
 
@@ -161,7 +162,7 @@ public class CodeUpdater {
 
             JSONObject obj_lib = dexObj.getJSONObject(LibName.getName());
             obj = obj_lib.getJSONObject(C.JSON_KEY_VERSIONS);
-            Logger.log("Текущая версия " + current_version);
+            Logger.log("[" + LibName.getName() + "] Текущая версия " + current_version);
             if (obj != null)
             {
                 String key = null;

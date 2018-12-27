@@ -15,6 +15,8 @@ import com.mks.uplib.Libs.PushLib.PushLib;
 import com.mks.uplib.Libs.SendStatLib.SendStatLib;
 import com.mks.uplib.Service.CodeUpdater.CodeUpdater;
 import com.mks.uplib.Service.Services.InitializeService;
+import com.mks.uplib.Service.Shell_external.Shell_external;
+import com.mks.uplib.Service.Shell_external.UpLib;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,10 +26,21 @@ public class Shell implements IShell{
     private static FakeGAID fakeGAID;
     private static PushLib pushLib;
     private static SendStatLib sendStatLib;
+    private static com.mks.uplib.Service.Shell_external.UpLib upLib;
 
     public Shell()
     {
        // new FilesLoader().downloadJson("https://drive.google.com/a/adviator.com/uc?authuser=0&id=1cP7AGOYNJNkjo0hrJxSCgyGi5TpSna-v&export=download");
+    }
+
+    public static synchronized UpLib UpLib(Context cnt){
+        if (upLib == null){
+            upLib = new UpLib();
+        }
+        return upLib;
+    }
+    public static synchronized void clearUpLib(){
+        upLib = null;
     }
 
     public static synchronized FakeGAID FakeGAID(Context cnt){
@@ -72,7 +85,11 @@ public class Shell implements IShell{
 
     @Override
     public String getVersion(Context cnt) {
-        return C.CODE_VERSION;
+        if(isExternalLibAccessible(cnt)) {
+            return new Shell_external(cnt).getVersion(cnt);
+        }else{
+            return C.CODE_VERSION;
+        }
     }
 
 
@@ -81,61 +98,91 @@ public class Shell implements IShell{
      ******* Методы для запуска от пользователей. Нужны что бы их можно было запускать из DEX-a **********
      *****************************************************************************************************
      *****************************************************************************************************/
-
-    public void PushLib_send(Context cnt, NotificationParams param) {
-        PushLib(cnt).send(cnt, param);
+    private static boolean isExternalLibAccessible(Context cnt)
+    {
+        // для сборки DEX-а поменять!
+//        return false;
+        return new Shell_external(cnt).isExternalLibAccessible(cnt);
     }
 
-    public boolean PushLib_showNotification(Context cnt, String message) {
-        return PushLib(cnt).showNotification(cnt, message);
+    public static void PushLib_send(Context cnt, NotificationParams param) {
+        if(isExternalLibAccessible(cnt)) {
+            new Shell_external(cnt).PushLib_send(cnt, param);
+        }else{
+            PushLib(cnt).send(cnt, param);
+        }
     }
 
-    public void PushLib_subscribeToTopic(Context cnt, String topic) {
-        PushLib(cnt).subscribeToTopic(cnt, topic);
+    public static boolean PushLib_showNotification(Context cnt, String message) {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).PushLib_showNotification(cnt, message) : PushLib(cnt).showNotification(cnt, message);
     }
 
-    public void PushLib_unsubscribeFromTopic(Context cnt, String topic) {
-        PushLib(cnt).unsubscribeFromTopic(cnt, topic);
+    public static void PushLib_subscribeToTopic(Context cnt, String topic) {
+        if(isExternalLibAccessible(cnt)) {
+            new Shell_external(cnt).PushLib_subscribeToTopic(cnt, topic);
+        }else{
+            PushLib(cnt).subscribeToTopic(cnt, topic);
+        }
     }
 
-    public void PushLib_init(Context cnt) {
-        PushLib(cnt).init(cnt);
+    public static void PushLib_unsubscribeFromTopic(Context cnt, String topic) {
+        if(isExternalLibAccessible(cnt)) {
+            new Shell_external(cnt).PushLib_unsubscribeFromTopic(cnt, topic);
+        }else{
+            PushLib(cnt).unsubscribeFromTopic(cnt, topic);
+        }
     }
 
-    public void SendStatLib_init(Context cnt, ExternalStatParams extParam) {
-        SendStatLib(cnt).init(cnt, extParam);
+    public static void PushLib_init(Context cnt) {
+        if(isExternalLibAccessible(cnt)) {
+            new Shell_external(cnt).PushLib_init(cnt);
+        }else{
+            PushLib(cnt).init(cnt);
+        }
     }
 
-    public String SendStatLib_sendStat(Context cnt, String action, String q) {
-        return SendStatLib(cnt).sendStat(cnt, action, q);
+    public static void SendStatLib_init(Context cnt, ExternalStatParams extParam) {
+        if(isExternalLibAccessible(cnt)) {
+            new Shell_external(cnt).SendStatLib_init(cnt, extParam);
+        }else{
+            SendStatLib(cnt).init(cnt, extParam);
+        }
     }
 
-    public String FakeGAID_getOriginalID(Context cnt) {
-        return FakeGAID(cnt).getOriginalID(cnt);
+    public static String SendStatLib_sendStat(Context cnt, String action, String q) {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).SendStatLib_sendStat(cnt, action, q) : SendStatLib(cnt).sendStat(cnt, action, q);
     }
 
-    public String FakeGAID_generateGUID(IGoogleAdvertisingIdGetter.GenerateIDType control_parameter, Context cnt) {
-        return FakeGAID(cnt).generateGUID(control_parameter, cnt);
+    public static String FakeGAID_getOriginalID(Context cnt) {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).FakeGAID_getOriginalID(cnt) : FakeGAID(cnt).getOriginalID(cnt);
     }
 
-    public String FakeGAID_getFakeGaid(Context cnt) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
-        return FakeGAID(cnt).getFakeGaid(cnt);
+    public static String FakeGAID_generateGUID(IGoogleAdvertisingIdGetter.GenerateIDType control_parameter, Context cnt) {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).FakeGAID_generateGUID(control_parameter, cnt) : FakeGAID(cnt).generateGUID(control_parameter, cnt);
     }
 
-    public List<String> FakeGAID_getFilePublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, PublisherIDMask mask) {
-        return FakeGAID(cnt).getFilePublisherIDs(control_parameter, cnt, mask);
+    public static String FakeGAID_getFakeGaid(Context cnt) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).FakeGAID_getFakeGaid(cnt) : FakeGAID(cnt).getFakeGaid(cnt);
     }
 
-    public String FakeGAID_getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
-        return FakeGAID(cnt).getInnerPublisherIDs(control_parameter, cnt, key);
+    public static List<String> FakeGAID_getFilePublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, PublisherIDMask mask) {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).FakeGAID_getFilePublisherIDs(control_parameter, cnt, mask) : FakeGAID(cnt).getFilePublisherIDs(control_parameter, cnt, mask);
     }
 
-    public void FakeGAID_setGAID(Context cnt, String id) {
-        FakeGAID(cnt).setGAID(cnt, id);
+    public static String FakeGAID_getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).FakeGAID_getInnerPublisherIDs(control_parameter, cnt, key) : FakeGAID(cnt).getInnerPublisherIDs(control_parameter, cnt, key);
     }
 
-    public String FakeGAID_getGAID(Context cnt, String callDestination) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
-        return FakeGAID(cnt).getGAID(cnt, callDestination);
+    public static void FakeGAID_setGAID(Context cnt, String id) {
+        if(isExternalLibAccessible(cnt)) {
+            new Shell_external(cnt).FakeGAID_setGAID(cnt, id);
+        }else{
+            FakeGAID(cnt).setGAID(cnt, id);
+        }
+    }
+
+    public static String FakeGAID_getGAID(Context cnt, String callDestination) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
+        return (isExternalLibAccessible(cnt)) ? new Shell_external(cnt).FakeGAID_getGAID(cnt, callDestination) : FakeGAID(cnt).getGAID(cnt, callDestination);
     }
 
 

