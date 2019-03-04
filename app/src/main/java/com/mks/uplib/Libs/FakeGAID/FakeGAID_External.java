@@ -104,6 +104,37 @@ public class FakeGAID_External implements IFakeGAID {
     }
 
     @Override
+    public List<String> getFilePublisherIDs(Context cnt, PublisherIDMask mask) {
+        Logger.log("Текущая версия GoogleAdvertisingIdGetter_FromExternalLib.getFilePublisherIDs()");
+        Class clazzGoogleAdvertisingIdGetter = libServicer.getExternalClass(cnt, extPackageName + ".GoogleAdvertisingIdGetter");
+        Class clazzMask                      = libServicer.getExternalClass(cnt, extPackageName + ".PublisherID.PublisherIDMask");
+
+        Object instance                      = libServicer.getInstance(clazzGoogleAdvertisingIdGetter, new Object[]{}, new Class[]{});
+        Object instanceMask                  = libServicer.getInstance(clazzMask,
+                new Object[]{
+                        mask.getPrefix(),
+                        mask.getSeporator(),
+                        mask.getExtension()
+                },
+                new Class[]{
+                        String.class,
+                        String.class,
+                        String.class
+                });
+
+
+        List<String> res                     = libServicer.callMethod(clazzGoogleAdvertisingIdGetter, instance, "getFilePublisherIDs",
+                new Object[]{
+                        cnt,
+                        instanceMask
+                },
+                new Class[]{
+                        Context.class,
+                        clazzMask
+                });
+        return res;
+    }
+    @Override
     public String getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
         Logger.log("Текущая версия GoogleAdvertisingIdGetter_FromExternalLib.getInnerPublisherIDs()");
         Class clazzGoogleAdvertisingIdGetter = libServicer.getExternalClass(cnt, extPackageName + ".GoogleAdvertisingIdGetter");

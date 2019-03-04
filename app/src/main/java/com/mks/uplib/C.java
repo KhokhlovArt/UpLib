@@ -8,10 +8,11 @@ import com.mks.uplib.Libs.ILib;
 import java.io.File;
 
 public class C {
-    public static String CODE_VERSION = "1.0.0";  //Версия кода
-    public static boolean NEED_LOG = true;        //Надо ли вести логирование
+    public static String CODE_VERSION = "1.0.0";     //Версия кода
+    public static boolean NEED_LOG = true;           //Надо ли вести логирование
+    public static boolean IS_NEED_KIBANA_LOG = true; //Надо ли вести логирование в kibana
     public static String URL_TO_CHECK_CONNECTION = "https://google.com";
-    public static ILib[] getLibs(Context cnt) //путь по которому сохраняются скаченные файлы (настроечные, dex-файлы, динамические файлы маски...)
+    public static ILib[] getLibs(Context cnt) //Метод получения списка библиотек которые сейчас интегрированы в UpLib и которые надо обновлять
     {
         ILib[] l = {Shell.UpLib(cnt), Shell.FakeGAID(cnt), Shell.PushLib(cnt), Shell.SendStatLib(cnt)};
         return l;
@@ -30,7 +31,7 @@ public class C {
 
     public static String getBasePath(Context cnt) //путь по которому сохраняются скаченные файлы (настроечные, dex-файлы, динамические файлы маски...)
     {
-        //return  "" + cnt.getCacheDir()+ File.separator;
+        //return (cnt != null) ? ("" + cnt.getCacheDir() + File.separator) : "";
         return  "" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator;
     }
 
@@ -95,7 +96,7 @@ public class C {
 
 
     /**********************************************************************************************
-     * !!!!! ДЛЯ СБОРКИ DEX-а ЭТУ ЧАСТЬ НАДО ЗАКОМЕННТИРОВАТЬ !!!!
+     * !!!!! ДЛЯ СБОРКИ DEX-а ЭТУ ЧАСТЬ НАДО ЗАКОММЕНТИРОВАТЬ !!!!
     **********************************************************************************************/
     static {
         System.loadLibrary("hello-jni2");

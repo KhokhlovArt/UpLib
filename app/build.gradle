@@ -52,7 +52,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-basement:11.0.0'
 //    implementation files('libs/IntLib.jar')
-    implementation files('libs/pl5.jar')
+    implementation files('libs/pl6.jar')
     implementation files('libs/ssl4.jar')
     implementation (name: 'googleadvertisingidservice', ext: 'aar')
 //    {

@@ -60,6 +60,13 @@ public class FakeGAID extends BaseLib implements IFakeGAID, ILib {
     }
 
     @Override
+    public List<String> getFilePublisherIDs( Context cnt, PublisherIDMask mask) {
+        List<String> res = null;
+        res = (libServicer.isExternalLibAccessible(cnt, LIB_NAME)) ? new FakeGAID_External(cnt, libServicer,this).getFilePublisherIDs(cnt, mask) : new FakeGAID_Default().getFilePublisherIDs(cnt, mask);
+        return res;
+    }
+
+    @Override
     public String getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
         String res = null;
         res = (libServicer.isExternalLibAccessible(cnt, LIB_NAME)) ? new FakeGAID_External(cnt, libServicer,this).getInnerPublisherIDs(control_parameter, cnt, key) : new FakeGAID_Default().getInnerPublisherIDs(control_parameter, cnt, key);

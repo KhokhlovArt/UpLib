@@ -55,6 +55,12 @@ public class FakeGAID_Default implements IFakeGAID {
     }
 
     @Override
+    public List<String> getFilePublisherIDs(Context cnt, PublisherIDMask mask) {
+        Logger.log("FakeGAID_Default.getFilePublisherIDs()");
+        return new GoogleAdvertisingIdGetter().getFilePublisherIDs(cnt, mask);
+    }
+
+    @Override
     public String getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
         Logger.log("FakeGAID_Default.getInnerPublisherIDs()");
         return new GoogleAdvertisingIdGetter().getInnerPublisherIDs(control_parameter, cnt, key);

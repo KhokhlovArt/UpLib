@@ -2,6 +2,7 @@ package com.mks.uplib.Service.Shell_external;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.advertising_id_service.appclick.googleadvertisingidservice.GoogleAdvertisingIdGetterRealisation.IGoogleAdvertisingIdGetter;
 import com.advertising_id_service.appclick.googleadvertisingidservice.PublisherID.PublisherIDMask;
@@ -9,8 +10,10 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.mks.pushlib.NotificationParams.NotificationParams;
 import com.mks.sendstatlib.StatParams.ExternalStatParams;
+import com.mks.uplib.C;
 import com.mks.uplib.Libs.ILib;
 import com.mks.uplib.Service.CodeUpdater.ExternalLibServicer;
+import com.mks.uplib.Service.Logger.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -85,32 +88,41 @@ public class Shell_external implements ILib {
     }
 
     public boolean PushLib_showNotification(Context cnt, String message) {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
+//        boolean res = libServicer.callMethod(clazzLib, instance, "showNotification", new Object[]{cnt, message}, new Class[]{Context.class, String.class});
+
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
-        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
-        boolean res = libServicer.callMethod(clazzLib, instance, "showNotification", new Object[]{cnt, message}, new Class[]{Context.class, String.class});
+        boolean res = libServicer.callStaticMethod(clazzShell, "PushLib_showNotification", new Object[]{cnt,message}, new Class[]{Context.class,String.class});
         return res;
     }
 
     public void PushLib_subscribeToTopic(Context cnt, String topic) {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
+//        libServicer.callMethod(clazzLib, instance, "subscribeToTopic", new Object[]{cnt, topic}, new Class[]{Context.class, String.class});
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
-        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
-        libServicer.callMethod(clazzLib, instance, "subscribeToTopic", new Object[]{cnt, topic}, new Class[]{Context.class, String.class});
+        libServicer.callStaticMethod(clazzShell, "PushLib_subscribeToTopic", new Object[]{cnt, topic}, new Class[]{Context.class, String.class});
     }
 
     public void PushLib_unsubscribeFromTopic(Context cnt, String topic) {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
+//        libServicer.callMethod(clazzLib, instance, "unsubscribeFromTopic", new Object[]{cnt, topic}, new Class[]{Context.class, String.class});
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
-        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
-        libServicer.callMethod(clazzLib, instance, "unsubscribeFromTopic", new Object[]{cnt, topic}, new Class[]{Context.class, String.class});
+        libServicer.callStaticMethod(clazzShell, "PushLib_unsubscribeFromTopic",new Object[]{cnt,topic}, new Class[]{Context.class,String.class});
     }
 
     public void PushLib_init(Context cnt) {
-        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
-        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
-        libServicer.callMethod(clazzLib, instance, "init", new Object[]{cnt}, new Class[]{Context.class});
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.PushLib.PushLib");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "PushLib", new Object[]{cnt}, new Class[]{Context.class});
+//        libServicer.callMethod(clazzLib, instance, "init", new Object[]{cnt}, new Class[]{Context.class});
+        Class clazzShell           = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+        libServicer.callStaticMethod(clazzShell, "PushLib_init", new Object[]{cnt}, new Class[]{Context.class});
     }
 
     public void SendStatLib_init(Context cnt, ExternalStatParams extParam) {
@@ -139,19 +151,43 @@ public class Shell_external implements ILib {
     }
 
     public String FakeGAID_getOriginalID(Context cnt) {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        String res = libServicer.callMethod(clazzLib, instance, "getOriginalID", new Object[]{cnt}, new Class[]{Context.class});
+//        return res;
+
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
-        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        String res = libServicer.callMethod(clazzLib, instance, "getOriginalID", new Object[]{cnt}, new Class[]{Context.class});
+        String res = libServicer.callStaticMethod(clazzShell, "FakeGAID_getOriginalID",
+                new Object[]
+                        {
+                                cnt
+                        },
+                new Class[]
+                        {
+                                Context.class
+                        });
         return res;
     }
 
     public String FakeGAID_generateGUID(IGoogleAdvertisingIdGetter.GenerateIDType control_parameter, Context cnt) {
-        Class clazzShell           = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib             = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
-
-        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        String res = libServicer.callMethod(clazzLib, instance, "generateGUID",
+//        Class clazzShell           = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib             = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        String res = libServicer.callMethod(clazzLib, instance, "generateGUID",
+//                new Object[]
+//                        {
+//                            control_parameter,
+//                            cnt
+//                        },
+//                new Class[]
+//                        {
+//                            IGoogleAdvertisingIdGetter.GenerateIDType.class,
+//                            Context.class
+//                        });
+        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+        String res = libServicer.callStaticMethod(clazzShell, "FakeGAID_generateGUID",
                 new Object[]
                         {
                             control_parameter,
@@ -166,10 +202,21 @@ public class Shell_external implements ILib {
     }
 
     public String FakeGAID_getFakeGaid(Context cnt) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        String res = libServicer.callMethod(clazzLib, instance, "getFakeGaid", new Object[]{cnt}, new Class[]{Context.class});
+//        return res;
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib   = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
-        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        String res = libServicer.callMethod(clazzLib, instance, "getFakeGaid", new Object[]{cnt}, new Class[]{Context.class});
+        String res = libServicer.callStaticMethod(clazzShell, "FakeGAID_getFakeGaid",
+                new Object[]
+                        {
+                                cnt
+                        },
+                new Class[]
+                        {
+                                Context.class
+                        });
         return res;
     }
 
@@ -192,7 +239,7 @@ public class Shell_external implements ILib {
 //                });
 
         Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        List<String>  res = libServicer.callMethod(clazzLib, instance, "getInnerPublisherIDs",
+        List<String>  res = libServicer.callMethod(clazzLib, instance, "FakeGAID_getFilePublisherIDs",
                 new Object[]
                         {
                             //libServicer.getEnumValue(clazzPublusherIDType, control_parameter.ordinal())
@@ -213,43 +260,97 @@ public class Shell_external implements ILib {
         return res;
     }
 
-    public String FakeGAID_getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
-        Class clazzShell           = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib             = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
-        //Class clazzPublusherIDType = libServicer.getExternalClass(cnt, extPackageName + ".GoogleAdvertisingIdGetterRealisation.IGoogleAdvertisingIdGetter$PublusherIDType");
+    public List<String> FakeGAID_getFilePublisherIDs(Context cnt, PublisherIDMask mask) {
+//        Class clazzShell           = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib             = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        List<String>  res = libServicer.callMethod(clazzLib, instance, "getFilePublisherIDs",
+//                new Object[]
+//                        {
+//                                cnt,
+//                                mask
+//                        },
+//                new Class[]
+//                        {
+//                                Context.class,
+//                                PublisherIDMask.class
+//                        });
+//
+//        return res;
 
-        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        String res = libServicer.callMethod(clazzLib, instance, "getInnerPublisherIDs",
+        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+        List<String> res = libServicer.callStaticMethod(clazzShell, "FakeGAID_getFilePublisherIDs",
                 new Object[]
-                    {
-                        //libServicer.getEnumValue(clazzPublusherIDType, control_parameter.ordinal()),
-                        control_parameter,
-                        cnt,
-                        key
-                    },
+                        {
+                                cnt,
+                                mask
+                        },
                 new Class[]
-                    {
-                        //clazzPublusherIDType,
-                        IGoogleAdvertisingIdGetter.PublusherIDType.class,
-                        Context.class,
-                        String.class
-                    });
+                        {
+                                Context.class,
+                                PublisherIDMask.class
+                        });
+        return res;
+    }
 
+    public String FakeGAID_getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key) {
+//        Class clazzShell           = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib             = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//        //Class clazzPublusherIDType = libServicer.getExternalClass(cnt, extPackageName + ".GoogleAdvertisingIdGetterRealisation.IGoogleAdvertisingIdGetter$PublusherIDType");
+//
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        String res = libServicer.callMethod(clazzLib, instance, "getInnerPublisherIDs",
+//                new Object[]
+//                    {
+//                        //libServicer.getEnumValue(clazzPublusherIDType, control_parameter.ordinal()),
+//                        control_parameter,
+//                        cnt,
+//                        key
+//                    },
+//                new Class[]
+//                    {
+//                        //clazzPublusherIDType,
+//                        IGoogleAdvertisingIdGetter.PublusherIDType.class,
+//                        Context.class,
+//                        String.class
+//                    });
+//
+//        return res;
+
+        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+        String res = libServicer.callStaticMethod(clazzShell, "FakeGAID_getGAID",
+                new Object[]{
+                    control_parameter,
+                    cnt,
+                    key
+                },
+                new Class[]{
+                    IGoogleAdvertisingIdGetter.PublusherIDType.class,
+                    Context.class,
+                    String.class
+                });
         return res;
     }
 
     public void FakeGAID_setGAID(Context cnt, String id) {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        libServicer.callMethod(clazzLib, instance, "setGAID", new Object[]{cnt, id}, new Class[]{Context.class, String.class});
+
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
-        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        libServicer.callMethod(clazzLib, instance, "setGAID", new Object[]{cnt, id}, new Class[]{Context.class, String.class});
+        libServicer.callStaticMethod(clazzShell, "FakeGAID_setGAID", new Object[]{cnt, id}, new Class[]{Context.class, String.class });
     }
 
     public String FakeGAID_getGAID(Context cnt, String callDestination) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
+//        Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
+//        Class clazzLib = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
+//        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
+//        String res = libServicer.callMethod(clazzLib, instance, "getGAID", new Object[]{cnt, callDestination}, new Class[]{Context.class, String.class});
+//        return res;
         Class clazzShell = libServicer.getExternalClass(cnt, extPackageName + ".Shell");
-        Class clazzLib = libServicer.getExternalClass(cnt,extPackageName + ".Libs.FakeGAID.FakeGAID");
-        Object instance = libServicer.callStaticMethod(clazzShell, "FakeGAID", new Object[]{cnt}, new Class[]{Context.class});
-        String res = libServicer.callMethod(clazzLib, instance, "getGAID", new Object[]{cnt, callDestination}, new Class[]{Context.class, String.class});
+        String res = libServicer.callStaticMethod(clazzShell, "FakeGAID_getGAID", new Object[]{cnt,callDestination}, new Class[]{Context.class, String.class});
         return res;
     }
 

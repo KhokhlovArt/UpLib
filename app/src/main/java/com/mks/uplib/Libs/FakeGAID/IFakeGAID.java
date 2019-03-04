@@ -17,6 +17,7 @@ public interface IFakeGAID{
 
     String getFakeGaid(final Context cnt) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException;
     List<String> getFilePublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, PublisherIDMask mask);
+    List<String> getFilePublisherIDs(Context cnt, PublisherIDMask mask);
     String getInnerPublisherIDs(IGoogleAdvertisingIdGetter.PublusherIDType control_parameter, Context cnt, String key);
     void setGAID(final Context cnt, String id);
     String getGAID(final Context cnt, String callDestination) throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException;
